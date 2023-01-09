@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<definition name="mainTiles" template="/WEB-INF/views/layouts/mainLayout.jsp">
+		<put-attribute name="title" value=""/>
+		<put-attribute name="header" value="/WEB-INF/views/layouts/mainHeader.jsp"/>
+		<put-attribute name="body" value=""/>
+		<put-attribute name="footer" value="/WEB-INF/views/layouts/mainFooter.jsp"/>
+	</definition>
+	
+	<definition name="WILDCARD:main/*/*" extends="mainTiles">
+		<put-attribute name="title" value="Yedam Community"/>
+		<put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp"/>
+	</definition>
+	
+	<!-- ProjectStudy 관련 페이지 => title에 Project and Study 나오게 -->
+	<definition name="WILDCARD:projectStudy/*/*" extends="mainTiles">
+		<put-attribute name="title" value="Project and Study"/>
+		<put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp"/>
+	</definition>
+	
+	<!-- FoodInfo관련 페이지 => title에 Food Information 나오게 -->
+	<definition name="WILDCARD:foodInfo/*/*" extends="mainTiles">
+		<put-attribute name="title" value="Food Information"/>
+		<put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp"/>
+	</definition>
+	
+	<!-- CafeInfo 관련 페이지 => title에 Cafe Information 나오게 -->
+	<definition name="WILDCARD:cafeInfo/*/*" extends="mainTiles">
+		<put-attribute name="title" value="StudyCafe Information"/>
+		<put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp"/>
+	</definition>
+</tiles-definitions>
