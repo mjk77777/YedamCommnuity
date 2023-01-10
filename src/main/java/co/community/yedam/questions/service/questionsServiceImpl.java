@@ -80,6 +80,12 @@ public class questionsServiceImpl implements questionsService {
 	public int updateCom(questionsVO vo) {
 		return map.updateCom(vo);
 	}
+
+	@Override
+	public int likeUpdate(questionsVO vo) {
+		// TODO Auto-generated method stub
+		return map.likeUpdate(vo);
+	}
 	 
 
 }

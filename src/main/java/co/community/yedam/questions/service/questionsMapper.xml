@@ -9,12 +9,7 @@
 		SELECT * FROM QUESTIONS ORDER BY QUESTIONS_ID DESC
 			</select>
 			
-	<select id="commentList" 
-		resultType="co.community.yedam.questions.service.questionsVO">
-		SELECT * FROM QUESTIONS_COMMENT WHERE QUESTIONS_ID = #{questionsId}
-		ORDER BY COMMENT_NUM ASC
-		
-		</select>
+	
 	
 
 	<!-- 동적 sql예시. id만 들어오면 찾아주고, 둘 다 들어오면 로그인 처리해주는 거 -->
@@ -40,16 +35,6 @@
 		
 	</insert>
 	
-	<insert id="commentInsert">
-		<selectKey keyProperty="commentNum" resultType="int" order="BEFORE">
-			SELECT CASE WHEN MAX(COMMENT_NUM) IS NULL THEN 1
-			ELSE
-			MAX(COMMENT_NUM) + 1 END AS NUM
-			FROM QUESTIONS_COMMENT
-		</selectKey>
-			INSERT INTO QUESTIONS_COMMENT (COMMENT_NUM, QUESTIONS_ID, COMMENT_ID, COMMENT_DATE,COMMENT_BODY)
-			VALUES(#{commentNum}, #{questionsId}, #{commentId}, SYSDATE, #{commentBody})
-	</insert>
 
 	<update id="questionsUpdate" parameterType="co.community.yedam.questions.service.questionsVO">
 		UPDATE QUESTIONS
@@ -69,6 +54,36 @@
 		QUESTIONS_ID = #{questionsId}
 	</delete>
 	
+	<!-- 좋아요 수 업데이트 -->
+	<update id="likeUpdate" parameterType="co.community.yedam.questions.service.questionsVO">
+		UPDATE QUESTIONS_LIKE
+		<set>
+		like_count = like_count + 1
+		</set>
+		WHERE QUESTIONS_ID = #{questionsId}
+	
+	</update>
+	
+	<!-- 댓글 전체조회 -->
+	<select id="commentList" 
+		resultType="co.community.yedam.questions.service.questionsVO">
+		SELECT * FROM QUESTIONS_COMMENT WHERE QUESTIONS_ID = #{questionsId}
+		ORDER BY COMMENT_NUM ASC
+	</select>
+	
+	
+	<!-- 댓글 등록 -->
+	<insert id="commentInsert">
+		<selectKey keyProperty="commentNum" resultType="int" order="BEFORE">
+			SELECT CASE WHEN MAX(COMMENT_NUM) IS NULL THEN 1
+			ELSE
+			MAX(COMMENT_NUM) + 1 END AS comment_num
+			FROM QUESTIONS_COMMENT
+		</selectKey>
+			INSERT INTO QUESTIONS_COMMENT (COMMENT_NUM, QUESTIONS_ID, COMMENT_ID, COMMENT_DATE,COMMENT_BODY)
+			VALUES(#{commentNum}, #{questionsId}, #{commentId}, SYSDATE, #{commentBody})
+	</insert>
+	
 	<!-- 댓글 삭제 -->
 	<delete id="delComment" parameterType="co.community.yedam.questions.service.questionsVO">
 		DELETE FROM QUESTIONS_COMMENT
@@ -86,13 +101,14 @@
 		WHERE comment_num = #{commentNum}
 	</update>
 	
-	 <!-- 조회수 증가 -->
+	<!-- 조회수 증가 -->
 	<update id="updateHit" parameterType="co.community.yedam.questions.service.questionsVO">
 		UPDATE QUESTIONS
 		SET HIT = HIT +1
 		WHERE QUESTIONS_ID = #{questionsId}
 	</update>
 	
+	<!-- 게시물 검색 -->
 	<select id="questionsSearchList" resultType="co.community.yedam.questions.service.questionsVO">
 		SELECT * FROM questions
 		WHERE 

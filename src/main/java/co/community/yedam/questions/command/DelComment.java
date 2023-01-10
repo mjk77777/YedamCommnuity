@@ -20,13 +20,12 @@ public class DelComment implements Command {
 		int commentNum = Integer.parseInt(request.getParameter("commentNum"));
 		int questionsId = Integer.parseInt(request.getParameter("questionsId"));
 		System.out.println("게시글번호"+Integer.parseInt(request.getParameter("questionsId")));
-		System.out.println("commentBody" + request.getParameter("commentBody"));
 		System.out.println("commentNum" +Integer.parseInt(request.getParameter("commentNum")));
 		
 		int a = dao.delComment(commentNum);
 		
 		if(a != 0) {
-			viewPage = "questionsSelect.do?questionsId"+request.getParameter("questionsId");
+			viewPage = "questionsSelect.do?questionsId="+questionsId;
 		}else {
 			request.setAttribute("message", "댓글 삭제가 실패하였습니다!");
 		}

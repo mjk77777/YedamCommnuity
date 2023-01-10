@@ -18,17 +18,18 @@ public class CommentReg implements Command {
 		questionsVO vo = new questionsVO();
 		
 		System.out.println("안녕");
-		System.out.println("게시글번호"+ request.getParameter("questionsId"));
+		System.out.println("게시글번호"+ Integer.parseInt(request.getParameter("questionsId").trim()));
 		System.out.println("작성자" + request.getParameter("commentId"));
+		System.out.println("내용" + request.getParameter("commentBody"));
 		
-		vo.setQuestionsId(Integer.parseInt(request.getParameter("questionsId")));
+		vo.setQuestionsId(Integer.parseInt(request.getParameter("questionsId").trim()));
 		vo.setCommentId(request.getParameter("commentId"));
 		vo.setCommentBody(request.getParameter("commentBody"));
 		
 		int a = dao.commentInsert(vo);
-		if(a != 0 ) {
+		if(a >= 1 ) {
 			// 성공
-			viewPage = "questionsSelect.do?questionsId" + request.getParameter("questionsId");
+			viewPage = "questionsSelect.do";
 		}else {
 			request.setAttribute("message", "댓글 등록이 실패하였습니다!");
 		}

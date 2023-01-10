@@ -6,6 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- jquery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- w3schools -->
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <style>
 .none{
 	border:none;
@@ -444,6 +448,23 @@ section.heading-page {
 					</tr>
 				</tbody>
 			</table>
+			<!-- 추천기능 -->
+			<div>
+				<div class="w3-border w3-center w3-padding">
+					<c:if test="${memberId == null }">
+						추천기능은 <button type="button" id="newLogin"><b class="w3-text-blue">로그인</b></button> 후 사용가능합니다.<br>
+						<i class="fa fa-heart" style="font-size:16px; color:red;"></i>
+						<span class="like_count"></span>
+					</c:if>
+					
+					<c:if test="${memberId != null }">
+						<button class="w3-button w3-white w3-round" id="like_update">
+							<i class="fa fa-heart" style="font-size:16px; color:red;"></i>
+							<span class="like_count"></span>
+						</button>
+					</c:if>
+				</div>
+			</div>
 		</section>
 		<br>
 		<div>
@@ -464,12 +485,12 @@ section.heading-page {
 			<h1 class="">댓글 입력</h1>
 			<section class="reply-form">
 				<c:if test="${memberId != null }">
-					<form action="commentReg.do" method="post">
-						<input type="hidden" name="questionsId" value="${vo.questionsId }">
-						<input type="hidden" name="commentId" value="${memberId }">
-							<div align="left">
-								<textarea placeholder="내용을 입력하세요." name="commentBody"></textarea>
-								<input type="submit" class="btn btn-dark" value="등록">
+					<form>
+						<input type="hidden" name="questionsId" id="questionsId" value="${vo.questionsId }">
+						<input type="hidden" name="commentId" id="commentId" value="${memberId }">
+							<div align="center">
+								<textarea placeholder="내용을 입력하세요." id="commentBody" name="commentBody"></textarea>
+								<input type="button" id="commReg" class="btn btn-dark" value="댓글등록">
 							</div>
 					</form>	
 				</c:if>
@@ -501,21 +522,24 @@ section.heading-page {
 							<form id="del" method="post">
 							<c:forEach items="${list }" var="li">
 								<tr class="none">
-									<td align="center"><input class="none" value="${li.commentId }" name="commentId" readonly></td>
-									<td align="center"><input class="none" id="comBody" value="${li.commentBody }" name="commentBody" readonly></td>
-									<td align="right"><input class="none" value="${li.commentDate }" name="commentDate" readonly></td>
+									<td align="center">${li.commentId }</td>
+									<td align="center">${li.commentBody }</td>
+									<td align="right">${li.commentDate }</td>
 									<td width="180">
 										<a href="#" class="comm" style="text-align:center">[답변]</a>
 										<c:if test="${memberId == li.commentId }">
 											<a href="#" class="comm" onclick="updCom(${li.commentNum})">[수정]</a>
 											<a href="#" class="comm" onclick="chkDel(${li.commentNum})">[삭제]</a>
-											<a href="#" class="upd" onclick="updated(${li.commentNum})">[수정]</a>
-											<a href="#" class="upd" id="reset">[취소]</a>
-											<b>${li.commentNum }</b>
+											
 											<input type="hidden" name="commentNum" value="${li.commentNum}" >
 											<input type="hidden" name="questionsId" value="${li.questionsId }">
 										</c:if>
 									</td>
+								</tr>
+								<tr class="area" style="display:none">
+									<td colspan="3" align="center"><textarea name="fixComm" id="fixComm" cols="80" ></textarea></td>
+									<td align="center"><a href="#" id="update" >[수정]</a>
+											<a href="#"  id="reset">[취소]</a></td>
 								</tr>
 							</c:forEach>
 						</form>
@@ -538,17 +562,14 @@ section.heading-page {
 				<input type="hidden" id="questionsId" name="questionsId"
 					value="${vo.questionsId}">
 			</form>
-			<form id="updForm" method="post">
-				
-				<input type="hidden" name="commentNum">
-				<input type="hidden" name="commentBody">
-				<input type="hidden" name="questionsId">
-			</form>
 		</div>
 
 
 		<script type="text/javascript">
-			$('.upd').hide();
+			
+		$('.area').hide();
+		
+		
 		
 			function subCall(str) {
 				if (str == 'E') {
@@ -576,25 +597,58 @@ section.heading-page {
 				}
 			}
 			
+			//댓글 등록 ajax
+			$('#commReg').click(function(){
+				if($('#commentBody').val().trim() === ""){
+					alert("내용을 입력해주세요!");
+					$('#commentBody').val("").focus();
+				}else{
+					$.ajax({
+						url : "commentReg.do",
+						type : "post",
+						data : {
+							questionsId : $('#questionsId').val() ,
+							commentId : $('#commentId').val(),
+							commentBody : $('#commentBody').val()
+						},
+						success: function(){
+							alert("댓글 등록 완료!");
+							$('#commentBody').val("");
+							// 댓글 리스트 불러오는 메소드 
+						},
+						error:function(reject){
+							console.log(reject);
+						}
+					});
+				}
+			});
 			
-			// 댓글 수정 누르면
-			function updCom(commentNum){
-				// "readonly" -> 해제!!
-				$('#comBody').attr('readonly',false);
-				$('#comBody').focus();
-				$('.comm').hide();
-				$('.upd').show();
-				//'취소 누르면 그냥 새로고침'
-				$('#reset').on('click',function(){
-					return "main/questions/questionsSelect";
+			
+			///// 좋아요 기능 /////
+			$(function(){
+				// 좋아요 버튼 클릭시(좋아요 증가/제거)
+				$('#like_update').click(function(){
+					$.ajax({
+						url : ,
+						type : "post",
+						data : {
+							
+						},
+						success : function(){
+							console.log("좋아요 성공");
+							// 바로 좋아요 수 구하는 함수 호출
+							likeCount();
+						},
+						error : function(reject){
+							console.log(reject);
+						}
+					});
 				});
-			}
+			});
+
+				
 			
-			//댓글 수정
-			function updated(commentNum){
-				updForm.action="updComment.do?commentNum="+commentNum;
-				updForm.submit();
-			}
+		
 			
 			
 		</script>

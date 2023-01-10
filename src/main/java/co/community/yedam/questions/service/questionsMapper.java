@@ -13,6 +13,7 @@ public interface questionsMapper {
 	int questionsUpdate(questionsVO vo);
 	int questionsDelete(questionsVO vo);
 	int updateHit(questionsVO vo); // 조회수 증가
+	int likeUpdate(questionsVO vo); // 좋아요수 업데이트
 	
 	
 	List<questionsVO> commentList(questionsVO vo); // 댓글 조회
