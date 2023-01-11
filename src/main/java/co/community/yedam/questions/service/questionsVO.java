@@ -20,7 +20,6 @@ public class questionsVO {
 	private Date questionsDate;
 	private String memberId; //외래키
 	private int hit; // 조회수 
-	private int likeCount; //좋아요 수
 	
 	private int commentNum; // 댓글번호
 	private String commentId; // 댓글작성자

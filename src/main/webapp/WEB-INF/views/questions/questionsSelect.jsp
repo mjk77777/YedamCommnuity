@@ -448,11 +448,12 @@ section.heading-page {
 					</tr>
 				</tbody>
 			</table>
+		</section>
 			<!-- 추천기능 -->
-			<div>
-				<div class="w3-border w3-center w3-padding">
+			<div align="center">
+				<div >
 					<c:if test="${memberId == null }">
-						추천기능은 <button type="button" id="newLogin"><b class="w3-text-blue">로그인</b></button> 후 사용가능합니다.<br>
+						추천기능은 <button type="button" onclick="location.href='memberLoginForm.do'"><b class="w3-text-blue">로그인</b></button> 후 사용가능합니다.<br>
 						<i class="fa fa-heart" style="font-size:16px; color:red;"></i>
 						<span class="like_count"></span>
 					</c:if>
@@ -465,9 +466,8 @@ section.heading-page {
 					</c:if>
 				</div>
 			</div>
-		</section>
 		<br>
-		<div>
+		<div align="center">
 			<c:if test="${vo.memberId eq memberId}">
 				<button type="button" onclick="subCall('E')"
 					class="btn btn-outline-dark">수정</button>
@@ -567,7 +567,9 @@ section.heading-page {
 
 		<script type="text/javascript">
 			
+		likeCount(); //좋아요 수 출력
 		$('.area').hide();
+		
 		
 		
 		
@@ -580,6 +582,48 @@ section.heading-page {
 				
 				fbss.submit();
 			}
+			
+		///// 좋아요 기능 /////
+			// 좋아요 버튼 클릭시(좋아요 증가/제거)
+			$('#like_update').click(function(){
+				$.ajax({
+					url : "likeUpdate.do" ,
+					type : "POST",
+					data : {
+						questionsId : ${vo.questionsId},
+						memberId : '${memberId}'
+					},
+					success : function(){
+						console.log("좋아요 성공");
+						// 바로 좋아요 수 구하는 함수 호출
+						likeCount();
+					},
+					error : function(reject){
+						console.log(reject);
+					}
+				});
+			});
+		
+			// 현재 좋아요 수 구하기
+			function likeCount(){
+				$.ajax({
+					url : "getLikeCount.do" ,
+					type : "POST",
+					data : {
+						questionsId : ${vo.questionsId}
+					},
+					success : function(result){
+						console.log("좋아요수 가져오기 성공");
+						$('.like_count').html(result);
+					},
+					error : function(reject){
+						console.log(reject);
+					}
+				});
+			}
+			
+		
+		
 			function delComment(commentNum){
 				// 삭제 form
 				del.action = "delComment.do?commentNum="+commentNum;
@@ -624,27 +668,7 @@ section.heading-page {
 			});
 			
 			
-			///// 좋아요 기능 /////
-			$(function(){
-				// 좋아요 버튼 클릭시(좋아요 증가/제거)
-				$('#like_update').click(function(){
-					$.ajax({
-						url : ,
-						type : "post",
-						data : {
-							
-						},
-						success : function(){
-							console.log("좋아요 성공");
-							// 바로 좋아요 수 구하는 함수 호출
-							likeCount();
-						},
-						error : function(reject){
-							console.log(reject);
-						}
-					});
-				});
-			});
+			
 
 				
 			

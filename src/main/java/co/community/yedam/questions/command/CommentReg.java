@@ -29,7 +29,7 @@ public class CommentReg implements Command {
 		int a = dao.commentInsert(vo);
 		if(a >= 1 ) {
 			// 성공
-			viewPage = "questionsSelect.do";
+			viewPage = "questionsSelect.do?questionsId"+Integer.valueOf(request.getParameter("questionsId"));
 		}else {
 			request.setAttribute("message", "댓글 등록이 실패하였습니다!");
 		}

@@ -86,6 +86,18 @@ public class questionsServiceImpl implements questionsService {
 		// TODO Auto-generated method stub
 		return map.likeUpdate(vo);
 	}
+
+	@Override
+	public String getLikeCount(int questionsId) {
+		// TODO Auto-generated method stub
+		return map.getLikeCount(questionsId);
+	}
+
+	@Override
+	public int chkLike(questionsVO vo) {
+		// TODO Auto-generated method stub
+		return map.chkLike(vo);
+	}
 	 
 
 }

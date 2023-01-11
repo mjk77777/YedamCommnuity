@@ -21,15 +21,17 @@ public class QuestionsSelect implements Command {
 		questionsVO vo = new questionsVO();
 		vo.setQuestionsId(Integer.valueOf(request.getParameter("questionsId")));
 		//vo.setHit(Integer.parseInt(request.getParameter("hit")));
-		System.out.println("조회수:" + Integer.parseInt(request.getParameter("hit")) );
+		
 		System.out.println("글번호"+request.getParameter("questionsId"));
 		
 		dao.updateHit(vo);
 		vo = dao.questionsSelect(vo);
-		
+		System.out.println("vo를 출력하기 : " + vo);
+
 		
 		List<questionsVO> list = new ArrayList<questionsVO>();
 		list = dao.commentList(vo);
+		System.out.println("리스트를 출력하기 : " + list);
 		 
 		 
 		if(vo != null ) {

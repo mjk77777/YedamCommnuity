@@ -54,15 +54,24 @@
 		QUESTIONS_ID = #{questionsId}
 	</delete>
 	
-	<!-- 좋아요 수 업데이트 -->
-	<update id="likeUpdate" parameterType="co.community.yedam.questions.service.questionsVO">
-		UPDATE QUESTIONS_LIKE
-		<set>
-		like_count = like_count + 1
-		</set>
-		WHERE QUESTIONS_ID = #{questionsId}
+	<!-- 좋아요 수 추가/업데이트 -->
+	<insert id="likeUpdate" parameterType="co.community.yedam.questions.service.questionsVO">
+		INSERT INTO QUESTIONS_LIKE(QUESTIONS_ID,MEMBER_ID)
+		VALUES(#{questionsId}, #{memberId})
+	</insert>
 	
-	</update>
+	<!-- 좋아요수 가져오기 -->
+	<select id="getLikeCount" resultType="String">
+		SELECT COUNT(*)
+		FROM QUESTIONS_LIKE
+		WHERE QUESTIONS_ID = #{questionsId}
+	</select>
+	
+	<!-- 좋아요 이전 이력 검색 -->
+	<select id="chkLike" resultType="int">
+		SELECT COUNT(*) FROM QUESTIONS_LIKE
+		WHERE QUESTIONS_ID = #{questionsId} AND MEMBER_ID = #{memberId}
+	</select>
 	
 	<!-- 댓글 전체조회 -->
 	<select id="commentList" 
