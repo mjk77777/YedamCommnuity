@@ -60,6 +60,12 @@
 		VALUES(#{questionsId}, #{memberId})
 	</insert>
 	
+	<!-- 좋아요 제거 -->
+	<delete id="delLike" parameterType="co.community.yedam.questions.service.questionsVO">
+		DELETE FROM QUESTIONS_LIKE
+		WHERE QUESTIONS_ID = #{questionsId} AND MEMBER_ID = #{memberId}
+	</delete>
+	
 	<!-- 좋아요수 가져오기 -->
 	<select id="getLikeCount" resultType="String">
 		SELECT COUNT(*)

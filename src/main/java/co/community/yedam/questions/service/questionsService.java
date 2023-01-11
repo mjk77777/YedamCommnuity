@@ -15,9 +15,11 @@ public interface questionsService {
 	int questionsUpdate(questionsVO vo);
 	int questionsDelete(questionsVO vo);
 	int updateHit(questionsVO vo); // 조회수 증가
-	int likeUpdate(questionsVO vo); // 좋아요수 업데이트
+	int likeUpdate(questionsVO vo); // 좋아요수 업데이트(추가)
+	int delLike(questionsVO vo); //좋아요 취소(제거)
 	String getLikeCount(int questionsId); // 좋아요수 가져오기
 	int chkLike(questionsVO vo); //좋아요 이전 이력 검색
+	
 	
 	List<questionsVO> commentList(questionsVO vo); // 댓글 조회
 	int commentInsert(questionsVO vo); //댓글 등록

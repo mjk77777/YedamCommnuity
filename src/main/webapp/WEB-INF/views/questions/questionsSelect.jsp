@@ -594,7 +594,6 @@ section.heading-page {
 						memberId : '${memberId}'
 					},
 					success : function(){
-						console.log("좋아요 성공");
 						// 바로 좋아요 수 구하는 함수 호출
 						likeCount();
 					},
@@ -604,7 +603,7 @@ section.heading-page {
 				});
 			});
 		
-			// 현재 좋아요 수 구하기
+			// 현재 좋아요 수 구하기 (비동기식으로 좋아요 수 업데이트하기)
 			function likeCount(){
 				$.ajax({
 					url : "getLikeCount.do" ,

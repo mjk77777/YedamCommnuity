@@ -24,18 +24,18 @@ public class LikeUpdate implements Command {
 		
 		
 		
-		// 그 전에 '좋아요'한 이력 있는지 검색
+		// 그 전에 '좋아요'한 이력 있는지 검색 (한사람당 한번만 좋아요 누를수있게)
 		int chk = dao.chkLike(vo);
 		System.out.println("이력있나?"+chk);
 		
 		if(chk == 0 ) {
 			// 좋아요 안 함 => 좋아요 추가
-			dao.likeUpdate(vo);
+			 dao.likeUpdate(vo);
 		}else {
-			// 좋아요 함 => 업데이트 안해도 돼
-			System.out.println("업데이트 안해");
-			return "main/questions/questionsSelect";
+			// 좋아요 함 => 좋아요 제거 ('좋아요' 두번 누르면 좋아요 취소되자나~)
+			 dao.delLike(vo);
 		}
-		return null;
+		//ajax: => return null;
+		return "ajax:";
 	}
 }
