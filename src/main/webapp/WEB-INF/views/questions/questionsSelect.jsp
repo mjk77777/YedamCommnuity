@@ -503,50 +503,16 @@ section.heading-page {
 
 			<h1 class="">댓글 목록</h1>
 			<br>
-			<section class="reply-list table-common">
-				<table border="1">
-					<colgroup>
-						<col width="100px">
-					</colgroup>
-							<thead>
-								<tr>
-									<th>작성자</th>
-									<th>내용</th>
-									<th>작성일자</th>
-								</tr>
-							</thead>
-						
-							<tbody>
-							<c:if test="${empty list }"><td colspan="5" align="center">댓글이 존재하지 않습니다.</td></c:if>
+				
+							<c:if test="${empty list }"><div>댓글이 존재하지 않습니다.</div></c:if>
 							<c:if test="${not empty list }">
 							<form id="del" method="post">
-							<c:forEach items="${list }" var="li">
-								<tr class="none">
-									<td align="center">${li.commentId }</td>
-									<td align="center">${li.commentBody }</td>
-									<td align="right">${li.commentDate }</td>
-									<td width="180">
-										<a href="#" class="comm" style="text-align:center">[답변]</a>
-										<c:if test="${memberId == li.commentId }">
-											<a href="#" class="comm" onclick="updCom(${li.commentNum})">[수정]</a>
-											<a href="#" class="comm" onclick="chkDel(${li.commentNum})">[삭제]</a>
-											
-											<input type="hidden" name="commentNum" value="${li.commentNum}" >
-											<input type="hidden" name="questionsId" value="${li.questionsId }">
-										</c:if>
-									</td>
-								</tr>
-								<tr class="area" style="display:none">
-									<td colspan="3" align="center"><textarea name="fixComm" id="fixComm" cols="80" ></textarea></td>
-									<td align="center"><a href="#" id="update" >[수정]</a>
-											<a href="#"  id="reset">[취소]</a></td>
-								</tr>
-							</c:forEach>
-						</form>
+							<div id="replyList"></div>
+									<input type="hidden" name="commentNum" value="${li.commentNum}" >
+									<input type="hidden" name="questionsId" value="${li.questionsId }">
+							</form>
 							</c:if>
-					</tbody>
-				</table>
-			</section>
+					
 		</div>
 		
 		<br>
@@ -568,6 +534,7 @@ section.heading-page {
 		<script type="text/javascript">
 			
 		likeCount(); //좋아요 수 출력
+		getReply(); // 댓글리스트 출력
 		$('.area').hide();
 		
 		
@@ -624,9 +591,20 @@ section.heading-page {
 		
 		
 			function delComment(commentNum){
-				// 삭제 form
+			/* 	// 삭제 form
 				del.action = "delComment.do?commentNum="+commentNum;
-				del.submit();
+				del.submit(); */
+				$.ajax({
+					url : "delComment.do",
+					type : "POST",
+					data : {
+						commentNum : commentNum
+					},
+					success : function(){
+						alert("삭제성공!");
+						getReply();
+					}
+				});
 			}
 			
 			//댓글 삭제 확인창
@@ -656,8 +634,10 @@ section.heading-page {
 						},
 						success: function(){
 							alert("댓글 등록 완료!");
-							$('#commentBody').val("");
+							// 댓글 리스트 보여주는 함수 호출
+							getReply();
 							// 댓글 리스트 불러오는 메소드 
+							$('#commentBody').val("");
 						},
 						error:function(reject){
 							console.log(reject);
@@ -665,6 +645,45 @@ section.heading-page {
 					});
 				}
 			});
+			
+			// 댓글 리스트 불러오는 ajax
+			function getReply(){
+				$.ajax({
+					url: "commentList.do",
+					type : "POST",
+					data : {
+						questionsId : ${vo.questionsId}
+					},
+					success : function(json){
+						json = json.replace(/\n/gi,"\\r\\n"); //개행문자 대체
+						$('#replyList').text(""); // 댓글리스트 영역 초기화
+						
+						var obj = JSON.parse(json); // service 클래스로부터 전달된 문자열 파싱
+						console.log(obj);
+						var replyList = obj.replyList; // 전달된 json의 키값
+						var output = ""; // 댓글 목록을 누적하여 보여주기 위한 변수
+						for(var i = 0; i<replyList.length; i++){ // 반복문을 통해 output에 누적
+							output += "<div class='w3-border w3-padding'>";
+							for(var j=0; j<replyList[i].length; j++){
+								var reply = replyList[i][j];
+								
+								if(j === 0){
+									output += "<i class='fa fa-user'></i>&nbsp;&nbsp;" + reply.commentId + "&nbsp;&nbsp;";
+								}else if(j === 1){
+									output += "&nbsp;&nbsp;<i class='fa fa-calendar'></i>&nbsp;&nbsp;" + reply.commentDate;
+								}else if(j === 2){
+									output +=  "<pre>" + reply.commentBody + "</pre></div>&nbsp;&nbsp;
+								}
+							};
+						};
+						$('#replyList').html(output); // replyList에 output 출력
+						
+					},
+					error : function(reject){
+						console.log(reject);
+					}
+				});
+			}
 			
 			
 			

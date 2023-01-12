@@ -70,6 +70,7 @@ import co.community.yedam.projectStudy.command.ProjectStudyUpdateForm;
 import co.community.yedam.projectStudy.command.StudyCard;
 import co.community.yedam.projectStudy.service.ProjectStudyVO;
 import co.community.yedam.questions.command.AjaxQuestionsSearch;
+import co.community.yedam.questions.command.CommentList;
 import co.community.yedam.questions.command.CommentReg;
 import co.community.yedam.questions.command.DelComment;
 import co.community.yedam.questions.command.GetLikeCount;
@@ -123,6 +124,7 @@ public class FrontController extends HttpServlet {
 		map.put("/questionsSearchForm.do", new QuestionsSearchForm());
 		map.put("/AjaxQuestionsSearch.do", new AjaxQuestionsSearch());
 		map.put("/commentReg.do", new CommentReg());
+		map.put("/commentList.do", new CommentList());
 		map.put("/delComment.do", new DelComment());
 		map.put("/updComment.do", new UpdComment());
 		map.put("/likeUpdate.do", new LikeUpdate());

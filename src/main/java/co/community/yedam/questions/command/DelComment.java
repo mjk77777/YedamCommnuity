@@ -25,7 +25,7 @@ public class DelComment implements Command {
 		int a = dao.delComment(commentNum);
 		
 		if(a != 0) {
-			viewPage = "questionsSelect.do?questionsId="+questionsId;
+			viewPage = "questionsSelect.do";
 		}else {
 			request.setAttribute("message", "댓글 삭제가 실패하였습니다!");
 		}

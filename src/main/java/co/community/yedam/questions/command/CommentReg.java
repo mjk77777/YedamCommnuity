@@ -27,10 +27,12 @@ public class CommentReg implements Command {
 		vo.setCommentBody(request.getParameter("commentBody"));
 		
 		int a = dao.commentInsert(vo);
+		
 		if(a >= 1 ) {
-			// 성공
-			viewPage = "questionsSelect.do?questionsId"+Integer.valueOf(request.getParameter("questionsId"));
+			// 댓글 등록 성공
+			viewPage = "ajax:questionsSelect.do"+Integer.parseInt(request.getParameter("questionsId").trim());
 		}else {
+			// 댓글 등록 실패
 			request.setAttribute("message", "댓글 등록이 실패하였습니다!");
 		}
 		return viewPage;
