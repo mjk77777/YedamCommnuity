@@ -503,15 +503,9 @@ section.heading-page {
 
 			<h1 class="">댓글 목록</h1>
 			<br>
-				
-							<c:if test="${empty list }"><div>댓글이 존재하지 않습니다.</div></c:if>
-							<c:if test="${not empty list }">
 							<form id="del" method="post">
-							<div id="replyList"></div>
-									<input type="hidden" name="commentNum" value="${li.commentNum}" >
-									<input type="hidden" name="questionsId" value="${li.questionsId }">
+								<div id="replyList"></div>
 							</form>
-							</c:if>
 					
 		</div>
 		
@@ -588,12 +582,77 @@ section.heading-page {
 				});
 			}
 			
+			
+			
+			// 댓글 수정 ajax
+			/*  function updComment(commentNum){
+				$.ajax({
+					url : "updComment.do",
+					type : "POST",
+					data : {
+						commentNum
+					},
+					success : function(){
+						
+					},
+					error : function(reject){
+						console.log(reject);
+					}
+				});
+			}*/
+			
+			//댓글 수정 확인창
+			function chkUpd(commentNum){
+				var msg = confirm('수정하시겠습니까?');
+				if(msg == true){
+					// 수정창으로 변경
+					chUpd(commentNum);
+				}else{
+					return false;
+				}
+			}
+			
+			//댓글 수정창
+			function chUpd(commentNum){
+				var commUpdView = "";
+				
+				commUpdView += "<div id='commentNum"+commentNum+"'>";
+				commUpdView += "<textarea class='form-control' cols='3' id='comarea'></textarea>";
+				commUpdView += "<div align='right'><button type='button' class='btn btn-danger'";
+				commUpdView += "onclick='updComm(" + commentNum + ")'>수정</button>";
+				commUpdView += "<button class='btn btn-secondary' type='button' onclick='getReply()'>취소</button></div>";
+				commUpdView += "</div>";
+				
+				$('#commentNum'+commentNum).replaceWith(commUpdView);
+				$('#commentNum'+commentNum+'#comarea').focus();
+				
+			};
+			
+			//댓글 수정 ajax
+			function updComm(commentNum){
+				$.ajax({
+					url : "updComment.do",
+					type : "POST",
+					data :{
+						commentNum,
+						commentBody : $('#comarea').val()
+					},
+					success : function(){
+						alert("수정완료");
+						getReply();
+					},
+					error : function(error){
+						console.log(error);
+					}
+				});
+			}
+			
 		
-		
-			function delComment(commentNum){
 			/* 	// 삭제 form
 				del.action = "delComment.do?commentNum="+commentNum;
 				del.submit(); */
+		
+			function delComment(commentNum){
 				$.ajax({
 					url : "delComment.do",
 					type : "POST",
@@ -601,8 +660,10 @@ section.heading-page {
 						commentNum : commentNum
 					},
 					success : function(){
-						alert("삭제성공!");
 						getReply();
+					},
+					error : function(reject){
+						console.log(reject);
 					}
 				});
 			}
@@ -636,7 +697,6 @@ section.heading-page {
 							alert("댓글 등록 완료!");
 							// 댓글 리스트 보여주는 함수 호출
 							getReply();
-							// 댓글 리스트 불러오는 메소드 
 							$('#commentBody').val("");
 						},
 						error:function(reject){
@@ -659,22 +719,29 @@ section.heading-page {
 						$('#replyList').text(""); // 댓글리스트 영역 초기화
 						
 						var obj = JSON.parse(json); // service 클래스로부터 전달된 문자열 파싱
-						console.log(obj);
 						var replyList = obj.replyList; // 전달된 json의 키값
 						var output = ""; // 댓글 목록을 누적하여 보여주기 위한 변수
+						if(replyList.length == 0){
+							output = "<div>등록된 댓글이 없습니다.</div>"
+						}
 						for(var i = 0; i<replyList.length; i++){ // 반복문을 통해 output에 누적
+							
 							output += "<div class='w3-border w3-padding'>";
 							for(var j=0; j<replyList[i].length; j++){
 								var reply = replyList[i][j];
-								
 								if(j === 0){
-									output += "<i class='fa fa-user'></i>&nbsp;&nbsp;" + reply.commentId + "&nbsp;&nbsp;";
+									output += "<div id='commentNum"+reply.commentNum+"'>";
 								}else if(j === 1){
-									output += "&nbsp;&nbsp;<i class='fa fa-calendar'></i>&nbsp;&nbsp;" + reply.commentDate;
+									output += "<i class='fa fa-user'></i>&nbsp;&nbsp;" + reply.commentId + "&nbsp;&nbsp;";
 								}else if(j === 2){
-									output +=  "<pre>" + reply.commentBody + "</pre></div>&nbsp;&nbsp;
+									output += "&nbsp;&nbsp;<i class='fa fa-calendar'></i>&nbsp;&nbsp;" + reply.commentDate;
+								}else if(j === 3){
+									output +=  "<pre id='reply_body'>" + reply.commentBody + "</pre>&nbsp;&nbsp;";
+								}else if(j === 4){
+									output += "<a href='#' onclick='chkUpd("+reply.commentNum+")'>[수정]</a>&nbsp;<a href='#' onclick='chkDel(" + reply.commentNum + ")'>[삭제]</a></div></div>"
 								}
 							};
+							
 						};
 						$('#replyList').html(output); // replyList에 output 출력
 						

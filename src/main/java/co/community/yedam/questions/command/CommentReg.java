@@ -30,7 +30,7 @@ public class CommentReg implements Command {
 		
 		if(a >= 1 ) {
 			// 댓글 등록 성공
-			viewPage = "ajax:questionsSelect.do"+Integer.parseInt(request.getParameter("questionsId").trim());
+			viewPage = "ajax:";
 		}else {
 			// 댓글 등록 실패
 			request.setAttribute("message", "댓글 등록이 실패하였습니다!");

@@ -34,7 +34,8 @@ public class CommentList implements Command {
 			int commentNum = list.get(i).getCommentNum();
 			
 			
-			json += "[{\"commentId\":\"" + commentId + "\"},";
+			json += "[{\"commentNum\":\"" +commentNum +"\"},";
+			json += "{\"commentId\":\"" + commentId +"\"},";
 			json += "{\"commentDate\":\"" + df.format(commentDate) + "\"},";
 			json += "{\"commentBody\":\""+commentBody + "\"},";
 			json += "{\"commentNum\":\""+commentNum + "\"}]";
@@ -47,8 +48,7 @@ public class CommentList implements Command {
 
 			
 		if(list != null) {
-			request.setAttribute("list", list);
-			
+			//request.setAttribute("list", list);
 		}
 		System.out.println("json"+json);
 		return "ajax:"+json;

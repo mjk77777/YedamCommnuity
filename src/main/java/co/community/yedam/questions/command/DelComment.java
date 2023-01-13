@@ -18,14 +18,11 @@ public class DelComment implements Command {
 		//questionsVO vo = new questionsVO();
 		
 		int commentNum = Integer.parseInt(request.getParameter("commentNum"));
-		int questionsId = Integer.parseInt(request.getParameter("questionsId"));
-		System.out.println("게시글번호"+Integer.parseInt(request.getParameter("questionsId")));
-		System.out.println("commentNum" +Integer.parseInt(request.getParameter("commentNum")));
 		
 		int a = dao.delComment(commentNum);
 		
 		if(a != 0) {
-			viewPage = "questionsSelect.do";
+			viewPage = "ajax:";
 		}else {
 			request.setAttribute("message", "댓글 삭제가 실패하였습니다!");
 		}
