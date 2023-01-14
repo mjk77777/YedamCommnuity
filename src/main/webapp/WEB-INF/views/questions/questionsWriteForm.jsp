@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>FreeBoard Insert Form</title>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<%-- summernote 라이브러리 추가 --%>
+
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link
@@ -16,6 +16,7 @@
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script
 	src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+<%-- summernote 라이브러리 추가 --%>
 <link
 	href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.4/summernote.css"
 	rel="stylesheet">
@@ -81,6 +82,7 @@ section.heading-page {
 						value="${memberId }">
 				</div>
 				<div>
+					<!-- summernote Api 추가 -->
 					<textarea name="questionsContent" id="questionsContent"></textarea>
 				</div>
 				<br>

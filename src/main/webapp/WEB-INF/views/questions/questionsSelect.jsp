@@ -506,6 +506,56 @@ section.heading-page {
 							<form id="del" method="post">
 								<div id="replyList"></div>
 							</form>
+							
+			<!-- <h1 class="">댓글 목록</h1>
+			<br>
+			<section class="reply-list table-common">
+				<table border="1">
+					<colgroup>
+						<col width="100px">
+					</colgroup>
+							<thead>
+								<tr>
+									<th>작성자</th>
+									<th>내용</th>
+									<th>작성일자</th>
+								</tr>
+							</thead>
+						
+							<tbody>
+							<c:if test="${empty list }"><td colspan="5" align="center">댓글이 존재하지 않습니다.</td></c:if>
+							<c:if test="${not empty list }">
+							<form id="del" method="post">
+							<c:forEach items="${list }" var="li">
+								<tr class="none">
+									<td align="center">${li.commentId }</td>
+									<td align="center">${li.commentBody }</td>
+									<td align="right">${li.commentDate }</td>
+									<td width="180">
+										<a href="#" class="comm" style="text-align:center">[답변]</a>
+										<c:if test="${memberId == li.commentId }">
+											<a href="#" class="comm" onclick="updCom(${li.commentNum})">[수정]</a>
+											<a href="#" class="comm" onclick="chkDel(${li.commentNum})">[삭제]</a>
+											
+											<input type="hidden" name="commentNum" value="${li.commentNum}" >
+											<input type="hidden" name="questionsId" value="${li.questionsId }">
+										</c:if>
+									</td>
+								</tr>
+								<tr class="area" style="display:none">
+									<td colspan="3" align="center"><textarea name="fixComm" id="fixComm" cols="80" ></textarea></td>
+									<td align="center"><a href="#" id="update" >[수정]</a>
+											<a href="#"  id="reset">[취소]</a></td>
+								</tr>
+							</c:forEach>
+						</form>
+							</c:if>
+					</tbody>
+				</table>
+			</section>
+		</div> -->
+
+							
 					
 		</div>
 		

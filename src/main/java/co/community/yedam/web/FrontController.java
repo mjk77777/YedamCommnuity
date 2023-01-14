@@ -129,6 +129,7 @@ public class FrontController extends HttpServlet {
 		map.put("/updComment.do", new UpdComment());
 		map.put("/likeUpdate.do", new LikeUpdate());
 		map.put("/getLikeCount.do", new GetLikeCount());
+		map.put("/chat.do",new Chat());
 		
 		// NoticeBoard
 		map.put("/noticeBoard.do", new NoticeBoard());

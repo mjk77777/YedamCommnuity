@@ -25,6 +25,7 @@ public class MemberJoin implements Command {
 				vo.setMemberEmail(request.getParameter("memberEmail"));
 				
 				int n = dao.memberInsert(vo);
+				
 				String viewPage = null;
 				if(n != 0) {
 					request.setAttribute("message", "★ 회원가입이 완료 되었습니다 로그인 해 주세요!!★");

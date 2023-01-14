@@ -7,6 +7,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- jquery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- w3schools -->
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<!-- font awesome -->
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+  />
 <title>문의게시판 목록</title>
 <style>
 table {
@@ -16,6 +25,16 @@ table {
 
 section.notice {
 	padding: 80px 0;
+}
+
+#chatImg{
+	position: fixed;
+    right: 50px;
+    bottom: 50px;
+    width: 97px;
+    height: 100px;
+    color : blue;
+    cursor : pointer;
 }
 
 .page-title {
@@ -290,6 +309,13 @@ section.heading-page {
 				</div>
 			</div>
 		</div>
+		
+		<!-- hot 게시판 -->
+		<div class="container" >
+			<i class="fa-regular fa-square"></i>
+			<i class="fa-regular fa-square-check"></i>
+			<button type="button" class="btn btn-danger">인기게시물</button>
+		</div>
 		<!-- board list area -->
 		<div id="board-list">
 			<div class="container">
@@ -320,11 +346,6 @@ section.heading-page {
 									<td align="center">${n.memberId }</td>
 									<td align="center">${n.questionsDate }</td>
 									<td align="center">${n.hit}</td>
-									<td><script>
-									document
-											.write(timestamp('${n.questionsDate}'));
-								</script></td>
-
 								</tr>
 							</c:forEach>
 						</c:if>
@@ -358,9 +379,11 @@ section.heading-page {
 				class="arrow next" href="#"></a> <a class="arrow nnext" href="#"></a>
 		</div>
 	</div>
+	
+		<button type="button" onclick="location.href='chat.do'"><img alt="채팅이미지" src="images/채팅.png" id="chatImg"></button>
 
 	<form id="fbf" name="fbf" method="post">
-		<input type="hidden" id="questionsId" name="questionsId">
+		<input type="hidden" id="questionsId" name="questionsId" style="color:blue" onclick="location.href='chat.jsp'">
 		<input type="hidden" name="hit" id="hit">
 	</form>
 

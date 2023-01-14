@@ -93,9 +93,7 @@
 </div>
 </form>
 <script type="text/javascript">
-   function loginAlter() {
-      alert('로그인이 완료되었습니다!')
-   }
+   
    
    var current = null;
    document.querySelector('#memberId').addEventListener('focus', function(e) {
