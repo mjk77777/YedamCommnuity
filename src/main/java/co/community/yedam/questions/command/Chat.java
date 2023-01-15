@@ -1,4 +1,4 @@
-package co.community.yedam.web;
+package co.community.yedam.questions.command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

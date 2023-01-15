@@ -1,5 +1,7 @@
 package co.community.yedam.member.command;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -22,6 +24,10 @@ public class MemberLogin implements Command {
 		vo.setMemberPw(request.getParameter("memberPw"));
 		vo = dao.memberSelect(vo);
 		
+	
+	
+		
+		
 		if(vo != null) {
 			//세션처리하고, 세션객체에 아이디,권한,이름 담는 것
 			session.setAttribute("memberId", vo.getMemberId()); 
@@ -42,6 +48,10 @@ public class MemberLogin implements Command {
 		}
 		return "noTiles:main/main";
 	}
+	
+	
+
+	
 
 
 }

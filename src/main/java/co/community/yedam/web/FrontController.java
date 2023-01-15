@@ -40,6 +40,7 @@ import co.community.yedam.freeBoard.command.FreeBoardSelect;
 import co.community.yedam.freeBoard.command.FreeBoardUpdateLike;
 import co.community.yedam.member.command.AjaxMemberIdCheck;
 import co.community.yedam.member.command.Dashboard;
+import co.community.yedam.member.command.KakaoLogin;
 import co.community.yedam.member.command.MemberDelete;
 import co.community.yedam.member.command.MemberJoin;
 import co.community.yedam.member.command.MemberJoinForm;
@@ -70,6 +71,7 @@ import co.community.yedam.projectStudy.command.ProjectStudyUpdateForm;
 import co.community.yedam.projectStudy.command.StudyCard;
 import co.community.yedam.projectStudy.service.ProjectStudyVO;
 import co.community.yedam.questions.command.AjaxQuestionsSearch;
+import co.community.yedam.questions.command.Chat;
 import co.community.yedam.questions.command.CommentList;
 import co.community.yedam.questions.command.CommentReg;
 import co.community.yedam.questions.command.DelComment;
@@ -112,7 +114,7 @@ public class FrontController extends HttpServlet {
 		map.put("/memberSelect.do", new MemberSelect());
 		map.put("/dashboard.do", new Dashboard());
 		map.put("/memberNotifications.do", new MemberNotifications());
-		
+		map.put("/kakaoLogin.do", new KakaoLogin());
 		// Questions
 		map.put("/questionsWriteForm.do", new QuestionsWriteForm());
 		map.put("/questionsSelectList.do", new QuestionsSelectList());

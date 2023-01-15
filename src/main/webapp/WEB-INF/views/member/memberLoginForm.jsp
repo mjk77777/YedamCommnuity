@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 <link href="css1/css/memberLogin2.css" rel="stylesheet" type="text/css">
 <link
    href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
@@ -12,6 +13,12 @@
    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
    crossorigin="anonymous">
    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+
+<!-- 제이쿼리 -->
+<script
+  src="https://code.jquery.com/jquery-3.6.3.js"
+  integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+  crossorigin="anonymous"></script>
 
 <style type="text/css">
 .custom-btn {
@@ -63,6 +70,9 @@
 .btn-16:active {
   top: 2px;
 }
+#kakaoBtn {
+	cursor : pointer;
+}
 </style>
 
 </head>
@@ -87,13 +97,76 @@
          <button  type="submit" class="custom-btn btn-16" style="color: white" value="Submit" onclick="loginAlter()">로그인</button>
          <button type="button" class="custom-btn btn-16" style="color: white; margin: 30px" onclick="location.href='memberJoinForm.do'">회원가입</button>
          <button type="button" class="custom-btn btn-16" style="color: white" onclick="location.href='main.do'">홈</button>
+         
+         <br><br>
+         
+         <div align="center">
+         	<a href="javascript:kakaoLogin()"><img src="images/카카오로그인.png" alt="카카오로그인 이미지"></a>
+         	<a href="javascript:kakaoLogout()">카카오 로그아웃</a>
+         </div>
+       
+      
+       
       </div>
     </div>
   </div>
 </div>
 </form>
+<!-- 카카오 로그인 api -->
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script type="text/javascript">
    
+Kakao.init('effc9084dea41c3c16edf6c22f6b5815');
+console.log(Kakao.isInitialized()); // 초기화 판단여부
+
+function kakaoLogin(){
+	Kakao.Auth.login({
+		// 받아올 정보 이름
+		scope : 'profile_nickname,account_email,gender',
+		success : function(authObj){
+			console.log(authObj);
+			// 위에까진 로그인이 성공한 상태
+			// 이제 데이터 받아올거야
+			window.Kakao.API.request({
+				//현재 로그인한 user의 데이터 가지고 있음
+				url : '/v2/user/me',
+				success : res => {
+					const kakao_account = res.kakao_account;
+					console.log(kakao_account);
+					var id = res.profile_nickname;
+					alert("로그인 성공!");
+					location.href="main.do";
+					
+				}
+			});
+		}
+	});
+}
+
+function kakaoLogout(){
+	if(Kakao.Auth.getAccessToken()){
+		Kakao.API.request({
+			url : '/v1/user/unlink',
+			success : function(res){
+				console.log(res);
+			},
+			fail :function(err){
+				console.log(err);
+			},
+		});
+		Kakao.Auth.setAccessToken(undefined);
+	}
+}
+
+
+<%
+session.setAttribute("memberId", "52");
+response.sendRedirect("memberLogin.do");
+%>
+ 
+
+
+</script>
    
    var current = null;
    document.querySelector('#memberId').addEventListener('focus', function(e) {
