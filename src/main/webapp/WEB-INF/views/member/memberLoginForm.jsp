@@ -112,10 +112,10 @@
   </div>
 </div>
 </form>
-<!-- 카카오 로그인 api -->
+<!-- <!-- 카카오 로그인 api -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script type="text/javascript">
-   
+/*    
 Kakao.init('effc9084dea41c3c16edf6c22f6b5815');
 console.log(Kakao.isInitialized()); // 초기화 판단여부
 
@@ -141,7 +141,7 @@ function kakaoLogin(){
 			});
 		}
 	});
-}
+}  */
 
 function kakaoLogout(){
 	if(Kakao.Auth.getAccessToken()){
@@ -159,10 +159,10 @@ function kakaoLogout(){
 }
 
 
-<%
+<%-- <%
 session.setAttribute("memberId", "52");
 response.sendRedirect("memberLogin.do");
-%>
+%> --%>
  
 
 

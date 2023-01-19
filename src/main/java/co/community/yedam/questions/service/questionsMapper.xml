@@ -54,6 +54,11 @@
 		QUESTIONS_ID = #{questionsId}
 	</delete>
 	
+	<!-- 마이페이지 좋아요한 목록 가져오기 -->
+	<select id="likeList" resultType="co.community.yedam.questions.service.questionsVO">
+		SELECT questions_title,
+	</select>
+	
 	<!-- 좋아요 수 추가/업데이트 -->
 	<insert id="likeUpdate" parameterType="co.community.yedam.questions.service.questionsVO">
 		INSERT INTO QUESTIONS_LIKE(QUESTIONS_ID,MEMBER_ID)

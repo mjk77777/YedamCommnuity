@@ -29,4 +29,6 @@ public class questionsVO {
 	private String commentBody; // 댓글 내용
 	
 	
+	
+	
 }

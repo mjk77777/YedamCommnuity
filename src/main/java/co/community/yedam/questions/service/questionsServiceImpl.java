@@ -104,6 +104,12 @@ public class questionsServiceImpl implements questionsService {
 		// TODO Auto-generated method stub
 		return map.delLike(vo);
 	}
+
+	@Override
+	public List<questionsVO> likeList() {
+		// TODO Auto-generated method stub
+		return map.likeList();
+	}
 	 
 
 }

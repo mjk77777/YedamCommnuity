@@ -576,12 +576,10 @@ section.heading-page {
 
 
 		<script type="text/javascript">
-			
+		
 		likeCount(); //좋아요 수 출력
 		getReply(); // 댓글리스트 출력
 		$('.area').hide();
-		
-		
 		
 		
 			function subCall(str) {
@@ -604,10 +602,26 @@ section.heading-page {
 						questionsId : ${vo.questionsId},
 						memberId : '${memberId}'
 					},
-					success : function(){
+					success : function(chk){
 						// 바로 좋아요 수 구하는 함수 호출
 						likeCount();
-					},
+						//알람기능(Notification API)
+						setTimeout(function(){
+							if (chk == 0){
+									var notification = new Notification('좋아요 +1',{
+										icon : 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Coraz%C3%B3n.svg/1200px-Coraz%C3%B3n.svg.png',
+										body : "${vo.memberId}님의 '${vo.questionsTitle}' 게시물에 좋아요하였습니다!"
+									})
+							}else{
+									var notification = new Notification('좋아요 -1',{
+										icon :'http://imagescdn.gettyimagesbank.com/500/17/967/209/0/836607762.jpg',
+										body : '좋아요를 취소하였습니다ㅠㅠ'
+									})
+							}
+						
+					},1000) //1초후에 함수 실행
+					}
+					,
 					error : function(reject){
 						console.log(reject);
 					}

@@ -36,6 +36,8 @@
 <link href='https://fonts.googleapis.com/css?family=Muli:400,300'
 	rel='stylesheet' type='text/css'>
 <link href="myPageCSS/css/themify-icons.css" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <title>Insert title here</title>
 
 
@@ -132,6 +134,12 @@ section.heading-page {
                     <a href="memberMyHomeForm.do">
                         <i class="ti-user"></i>
                         <p>MY PAGE</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="likeList.do">
+                        <i class="fa-regular fa-heart"></i>
+                        <p>좋아요 목록</p>
                     </a>
                 </li>
                 

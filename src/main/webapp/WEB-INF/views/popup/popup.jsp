@@ -10,6 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
 
 <script type="text/javascript">
+
 //head 태그 안에 스크립트 선언
         function setCookie( name, value, expiredays ) { 
             var todayDate = new Date(); //Date를 활용하여 원하는 쿠키유지시간 조절 가능 ex. todayDate.getHours()+추가값...
@@ -20,6 +21,7 @@
         function closePop() {
             if ( document.pop_form.chkbox.checked ){
                 setCookie( "maindiv", "done" , 1 );
+                // 알림
             }
             // 없어진 것처럼 보이지만 그냥 숨은거임
             document.all['layer_popup'].style.visibility = "hidden";

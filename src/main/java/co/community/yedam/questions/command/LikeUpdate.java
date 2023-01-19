@@ -36,6 +36,6 @@ public class LikeUpdate implements Command {
 			 dao.delLike(vo);
 		}
 		//ajax: => return null;
-		return "ajax:";
+		return "ajax:"+chk;
 	}
 }
