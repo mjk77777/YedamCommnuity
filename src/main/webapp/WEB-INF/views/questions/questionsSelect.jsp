@@ -794,15 +794,15 @@ section.heading-page {
 							for(var j=0; j<replyList[i].length; j++){
 								var reply = replyList[i][j];
 								if(j === 0){
-									output += "<div id='commentNum"+reply.commentNum+"'>";
+									output += "<div align='left' id='commentNum"+reply.commentNum+"'>";
 								}else if(j === 1){
 									output += "<i class='fa fa-user'></i>&nbsp;&nbsp;" + reply.commentId + "&nbsp;&nbsp;";
 								}else if(j === 2){
 									output += "&nbsp;&nbsp;<i class='fa fa-calendar'></i>&nbsp;&nbsp;" + reply.commentDate;
 								}else if(j === 3){
-									output +=  "<pre id='reply_body'>" + reply.commentBody + "</pre>&nbsp;&nbsp;";
+									output +=  "<div id='reply_body'>" + reply.commentBody + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 								}else if(j === 4){
-									output += "<a href='#' onclick='chkUpd("+reply.commentNum+")'>[수정]</a>&nbsp;<a href='#' onclick='chkDel(" + reply.commentNum + ")'>[삭제]</a></div></div>"
+									output += "<a href='#' onclick='rereply("+reply.commentNum+")'>[대댓글]</a>&nbsp;<a href='#' onclick='chkUpd("+reply.commentNum+")'>[수정]</a>&nbsp;<a href='#' onclick='chkDel(" + reply.commentNum + ")'>[삭제]</a></div><div style='display:none' class='re'><input type='text'  id='rere'placeholder='댓글입력하세요' class='re'><button type='submit'value='등록' class='re'></button></div></div></div>"
 								}
 							};
 							
@@ -814,6 +814,12 @@ section.heading-page {
 						console.log(reject);
 					}
 				});
+			}
+			
+			// '대댓글' 눌렀을 때
+			function rereply(commentNum){
+				$('#commentNum'+commentNum+'.re').show();
+				
 			}
 			
 			
