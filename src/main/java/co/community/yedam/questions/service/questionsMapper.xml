@@ -87,7 +87,9 @@
 	<!-- 댓글 전체조회 -->
 	<select id="commentList" 
 		resultType="co.community.yedam.questions.service.questionsVO">
-		SELECT * FROM QUESTIONS_COMMENT WHERE QUESTIONS_ID = #{questionsId}
+		SELECT COMMENT_NUM, QUESTIONS_ID, COMMENT_ID, COMMENT_DATE, COMMENT_BODY
+		FROM QUESTIONS_COMMENT
+		WHERE QUESTIONS_ID = #{questionsId}
 		ORDER BY COMMENT_NUM ASC
 	</select>
 	

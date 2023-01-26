@@ -580,6 +580,7 @@ section.heading-page {
 		likeCount(); //좋아요 수 출력
 		getReply(); // 댓글리스트 출력
 		$('.area').hide();
+		$('.hide').hide();
 		
 		
 			function subCall(str) {
@@ -802,7 +803,9 @@ section.heading-page {
 								}else if(j === 3){
 									output +=  "<div id='reply_body'>" + reply.commentBody + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 								}else if(j === 4){
-									output += "<a href='#' onclick='rereply("+reply.commentNum+")'>[대댓글]</a>&nbsp;<a href='#' onclick='chkUpd("+reply.commentNum+")'>[수정]</a>&nbsp;<a href='#' onclick='chkDel(" + reply.commentNum + ")'>[삭제]</a></div><div style='display:none' class='re'><input type='text'  id='rere'placeholder='댓글입력하세요' class='re'><button type='submit'value='등록' class='re'></button></div></div></div>"
+									output += "<a href='#' onclick='rereply("+reply.commentNum+")'>[대댓글]</a>&nbsp;<a href='#' onclick='chkUpd("+reply.commentNum+")'>[수정]</a>&nbsp;<a href='#' onclick='chkDel(" + reply.commentNum + ")'>[삭제]</a></div>"
+									output += "<div id='rereply_body"+reply.commentNum+"' style='display:none;'>------------------------------------------------------------------------";
+									output += "<textarea style='width:700px' id='rereply_content'></textarea><button onclick='rereply("+reply.commentNum+")'>등록</button><button type='reset'>취소</button></div></div></div>";
 								}
 							};
 							
@@ -818,7 +821,7 @@ section.heading-page {
 			
 			// '대댓글' 눌렀을 때
 			function rereply(commentNum){
-				$('#commentNum'+commentNum+'.re').show();
+				$('#rereply_body'+commentNum).show();
 				
 			}
 			

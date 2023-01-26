@@ -27,6 +27,9 @@ public class questionsVO {
 	private Date commentDate;// 댓글 작성
 	private int commentParent; // 부모글
 	private String commentBody; // 댓글 내용
+	private int depth;
+	private int orderNo;
+	private int groupId;
 	
 	
 	
