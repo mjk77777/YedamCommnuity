@@ -413,6 +413,9 @@ section.heading-page {
 	background-color : gray;
 	color : white;
 }
+.rep{
+	text-align:left;
+}
 </style>
 
 
@@ -807,9 +810,9 @@ section.heading-page {
 							for(var j=0; j<replyList[i].length; j++){
 								var reply = replyList[i][j];
 								if(j === 0){
-									output += "<div style='padding-left:(40 *"+reply.depth+")px'>";
+									output += "<div class='rep' style='padding-left:"+ reply.depth * 50 +"px;'";
 								}else if (j === 1){
-									output += "<div align='left' id='commentNum"+reply.commentNum+"'>";
+									output += "id='commentNum"+reply.commentNum+"'>";
 								}else if(j === 2){
 									output += "<i class='fa fa-user'></i>&nbsp;&nbsp;" + reply.commentId + "&nbsp;&nbsp;";
 								}else if(j === 3){
@@ -819,7 +822,7 @@ section.heading-page {
 								}else if(j === 5){
 									output += "<a href='#' onclick='rereply("+reply.commentNum+")'>[대댓글]</a>&nbsp;<a href='#' onclick='chkUpd("+reply.commentNum+")'>[수정]</a>&nbsp;<a href='#' onclick='chkDel(" + reply.commentNum + ")'>[삭제]</a></div>"
 									output += "<div id='rereply_body"+reply.commentNum+"' style='display:none;'>------------------------------------------------------------------------";
-									output += "<textarea style='width:700px' id='rereplyContent"+reply.commentNum+"' name='rereplyContent'></textarea><button class='button' onclick='re("+reply.commentNum+")'>등록</button>&nbsp;&nbsp;&nbsp;<button type='reset' class='button'>취소</button></div></div></div></div>";
+									output += "<textarea style='width:700px' id='rereplyContent"+reply.commentNum+"' name='rereplyContent'></textarea><button class='button' type='button' onclick='re("+reply.commentNum+")'>등록</button>&nbsp;&nbsp;&nbsp;<button type='reset' class='button'>취소</button></div></div></div>";
 								}
 							};
 							

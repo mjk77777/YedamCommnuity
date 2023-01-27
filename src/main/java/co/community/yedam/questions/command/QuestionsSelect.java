@@ -26,15 +26,9 @@ public class QuestionsSelect implements Command {
 		
 		dao.updateHit(vo);
 		vo = dao.questionsSelect(vo);
-
 		
-		List<questionsVO> list = new ArrayList<questionsVO>();
-		list = dao.commentList(vo);
-		 
-		 
 		if(vo != null ) {
 			request.setAttribute("vo", vo);
-			request.setAttribute("list",list);
 		}
 		return "main/questions/questionsSelect";
 	}

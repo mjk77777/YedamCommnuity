@@ -85,9 +85,10 @@
 	<select id="commentList" 
 		resultType="co.community.yedam.questions.service.questionsVO">
 		SELECT *
-		FROM QUESTIONS_COMMENT
+		FROM QUESTIONS_COMMENT 
 		WHERE QUESTIONS_ID = #{questionsId}
-		ORDER BY COMMENT_NUM ASC
+		START WITH ORDER_NO = 1
+		CONNECT BY PRIOR COMMENT_NUM = COMMENT_PARENT
 	</select>
 	
 	

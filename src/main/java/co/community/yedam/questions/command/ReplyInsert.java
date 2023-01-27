@@ -29,20 +29,18 @@ public class ReplyInsert implements Command {
 		// depth, order_no, group_id 우예 정할까
 			// depth => 부모id의 depth 에 +1 (selectParentDepth)
 				int depth = dao.selectParentDepth(commentNum)+1;
-				System.out.println("depth는:"+depth);
 				vo.setDepth(depth);	
 			// 	group_id => 부모 id의 그룹 아이디(selectParentGroupid)
 				int groupId = dao.selectParentGroupid(commentNum);
-				System.out.println("groupId는:"+groupId);
 				vo.setGroupId(groupId);
 			// order_no => 그룹 아이디=? 몇개인지 카운트하고 거기서 +1 (countGroupId)
 				int cnt = dao.countGroupId(groupId);
-				System.out.println("cnt는:"+cnt);
 				vo.setOrderNo(cnt+1);
 		
 				int result = dao.replyInsert(vo);
 				// result가 1이면 성공 0이면 실패
-				if(result > 0) {
+				
+				if(result >= 1) {
 					viewPage = "ajax:";
 				}else {
 					request.setAttribute("message", "댓글 등록이 실패하였습니다!");

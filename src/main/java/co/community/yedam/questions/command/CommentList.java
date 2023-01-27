@@ -33,6 +33,7 @@ public class CommentList implements Command {
 			SimpleDateFormat df = new SimpleDateFormat("YY-MM-dd HH:mm:ss");
 			int commentNum = list.get(i).getCommentNum();
 			int depth = list.get(i).getDepth();
+			System.out.println("json의 depth:"+depth);
 			
 			json += "[{\"depth\":\""+depth+"\"},";
 			json += "{\"commentNum\":\"" +commentNum +"\"},";
