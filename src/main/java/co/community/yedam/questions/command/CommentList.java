@@ -30,11 +30,12 @@ public class CommentList implements Command {
 			String commentId = list.get(i).getCommentId();
 			String commentBody = list.get(i).getCommentBody();
 			Date commentDate = list.get(i).getCommentDate();
-			SimpleDateFormat df = new SimpleDateFormat("YY-MM-dd");
+			SimpleDateFormat df = new SimpleDateFormat("YY-MM-dd HH:mm:ss");
 			int commentNum = list.get(i).getCommentNum();
+			int depth = list.get(i).getDepth();
 			
-			
-			json += "[{\"commentNum\":\"" +commentNum +"\"},";
+			json += "[{\"depth\":\""+depth+"\"},";
+			json += "{\"commentNum\":\"" +commentNum +"\"},";
 			json += "{\"commentId\":\"" + commentId +"\"},";
 			json += "{\"commentDate\":\"" + df.format(commentDate) + "\"},";
 			json += "{\"commentBody\":\""+commentBody + "\"},";

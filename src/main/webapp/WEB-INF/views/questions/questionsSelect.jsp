@@ -404,6 +404,15 @@ section.heading-page {
 	padding-bottom: 110px;
 	text-align: center;
 }
+.button{
+	cursor : pointer;
+	border-radius : 7px;
+	border : none;
+}
+.button:hover{
+	background-color : gray;
+	color : white;
+}
 </style>
 
 
@@ -488,6 +497,9 @@ section.heading-page {
 					<form>
 						<input type="hidden" name="questionsId" id="questionsId" value="${vo.questionsId }">
 						<input type="hidden" name="commentId" id="commentId" value="${memberId }">
+						<input type="hidden" name="commentParent" value=0>
+						<input type="hidden" name="depth" value=0>
+						<input type="hidden" name="orderNo" value=0>
 							<div align="center">
 								<textarea placeholder="내용을 입력하세요." id="commentBody" name="commentBody"></textarea>
 								<input type="button" id="commReg" class="btn btn-dark" value="댓글등록">
@@ -795,17 +807,19 @@ section.heading-page {
 							for(var j=0; j<replyList[i].length; j++){
 								var reply = replyList[i][j];
 								if(j === 0){
+									output += "<div style='padding-left:(40 *"+reply.depth+")px'>";
+								}else if (j === 1){
 									output += "<div align='left' id='commentNum"+reply.commentNum+"'>";
-								}else if(j === 1){
-									output += "<i class='fa fa-user'></i>&nbsp;&nbsp;" + reply.commentId + "&nbsp;&nbsp;";
 								}else if(j === 2){
-									output += "&nbsp;&nbsp;<i class='fa fa-calendar'></i>&nbsp;&nbsp;" + reply.commentDate;
+									output += "<i class='fa fa-user'></i>&nbsp;&nbsp;" + reply.commentId + "&nbsp;&nbsp;";
 								}else if(j === 3){
-									output +=  "<div id='reply_body'>" + reply.commentBody + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+									output += "&nbsp;&nbsp;<i class='fa fa-calendar'></i>&nbsp;&nbsp;" + reply.commentDate;
 								}else if(j === 4){
+									output +=  "<div id='reply_body'>" + reply.commentBody + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+								}else if(j === 5){
 									output += "<a href='#' onclick='rereply("+reply.commentNum+")'>[대댓글]</a>&nbsp;<a href='#' onclick='chkUpd("+reply.commentNum+")'>[수정]</a>&nbsp;<a href='#' onclick='chkDel(" + reply.commentNum + ")'>[삭제]</a></div>"
 									output += "<div id='rereply_body"+reply.commentNum+"' style='display:none;'>------------------------------------------------------------------------";
-									output += "<textarea style='width:700px' id='rereply_content'></textarea><button onclick='rereply("+reply.commentNum+")'>등록</button><button type='reset'>취소</button></div></div></div>";
+									output += "<textarea style='width:700px' id='rereplyContent"+reply.commentNum+"' name='rereplyContent'></textarea><button class='button' onclick='re("+reply.commentNum+")'>등록</button>&nbsp;&nbsp;&nbsp;<button type='reset' class='button'>취소</button></div></div></div></div>";
 								}
 							};
 							
@@ -822,9 +836,29 @@ section.heading-page {
 			// '대댓글' 눌렀을 때
 			function rereply(commentNum){
 				$('#rereply_body'+commentNum).show();
-				
 			}
-			
+			// '대댓글'-> '등록' 클릭시
+			function re(commentNum){
+				$.ajax({
+					url : 'replyInsert.do' ,
+					type : 'post',
+					data : {
+						commentNum,
+						commentBody : $('#rereplyContent'+commentNum).val(),
+						questionsId : ${vo.questionsId},
+						commentId : $('#commentId').val()
+					},
+					success : function(){
+						alert("대댓글 등록 완료!");
+						// 댓글 리스트 보여주는 함수 호출
+						getReply();
+						$('#rereply_content').val("");
+					},
+					error : function(){
+						console.log(error);
+					}
+				});
+			}
 			
 			
 

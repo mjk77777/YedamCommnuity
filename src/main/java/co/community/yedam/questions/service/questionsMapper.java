@@ -24,7 +24,10 @@ public interface questionsMapper {
 	int commentInsert(questionsVO vo); //댓글 등록
 	int updateCom(questionsVO vo); // 댓글수정
 	int delComment(int commentNum); // 댓글 삭제
-	
+	int replyInsert(questionsVO vo); // 대댓글 등록 
+	int selectParentDepth(int commentNum); //부모id의 depth 구하기
+	int selectParentGroupid(int commentNum); // 부모id의 groupId 구하기
+	int countGroupId(int groupId);
 	
 	List<questionsVO> questionsSearchList(@Param("key") String key, @Param("val") String val);  //게시글 검색
 	

@@ -25,6 +25,9 @@ public class CommentReg implements Command {
 		vo.setQuestionsId(Integer.parseInt(request.getParameter("questionsId").trim()));
 		vo.setCommentId(request.getParameter("commentId"));
 		vo.setCommentBody(request.getParameter("commentBody"));
+		vo.setDepth(0);
+		vo.setOrderNo(0);
+		vo.setCommentParent(0);
 		
 		int a = dao.commentInsert(vo);
 		

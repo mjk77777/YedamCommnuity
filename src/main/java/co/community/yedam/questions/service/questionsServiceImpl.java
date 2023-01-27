@@ -110,6 +110,30 @@ public class questionsServiceImpl implements questionsService {
 		// TODO Auto-generated method stub
 		return map.likeList();
 	}
+
+	// 대댓글 등록
+	@Override
+	public int replyInsert(questionsVO vo) {
+		return map.replyInsert(vo);
+	}
+
+	@Override
+	public int selectParentDepth(int commentNum) {
+		// TODO Auto-generated method stub
+		return map.selectParentDepth(commentNum);
+	}
+
+	@Override
+	public int selectParentGroupid(int commentNum) {
+		// TODO Auto-generated method stub
+		return map.selectParentGroupid(commentNum);
+	}
+
+	@Override
+	public int countGroupId(int groupId) {
+		// TODO Auto-generated method stub
+		return map.countGroupId(groupId);
+	}
 	 
 
 }

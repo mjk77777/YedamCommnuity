@@ -19,7 +19,7 @@ public class QuestionsSelect implements Command {
 	public String exec(HttpServletRequest request, HttpServletResponse response) {
 		questionsService dao = new questionsServiceImpl();
 		questionsVO vo = new questionsVO();
-		vo.setQuestionsId(Integer.valueOf(request.getParameter("questionsId")));
+		vo.setQuestionsId(Integer.valueOf(request.getParameter("questionsId").trim()));
 		//vo.setHit(Integer.parseInt(request.getParameter("hit")));
 		
 		System.out.println("글번호"+request.getParameter("questionsId"));

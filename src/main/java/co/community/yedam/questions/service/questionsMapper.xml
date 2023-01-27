@@ -9,10 +9,7 @@
 		SELECT * FROM QUESTIONS ORDER BY QUESTIONS_ID DESC
 			</select>
 			
-	
-	
 
-	<!-- 동적 sql예시. id만 들어오면 찾아주고, 둘 다 들어오면 로그인 처리해주는 거 -->
 	<select id="questionsSelect"
 		resultType="co.community.yedam.questions.service.questionsVO">
 		SELECT * FROM QUESTIONS
@@ -87,7 +84,7 @@
 	<!-- 댓글 전체조회 -->
 	<select id="commentList" 
 		resultType="co.community.yedam.questions.service.questionsVO">
-		SELECT COMMENT_NUM, QUESTIONS_ID, COMMENT_ID, COMMENT_DATE, COMMENT_BODY
+		SELECT *
 		FROM QUESTIONS_COMMENT
 		WHERE QUESTIONS_ID = #{questionsId}
 		ORDER BY COMMENT_NUM ASC
@@ -102,9 +99,40 @@
 			MAX(COMMENT_NUM) + 1 END AS comment_num
 			FROM QUESTIONS_COMMENT
 		</selectKey>
-			INSERT INTO QUESTIONS_COMMENT (COMMENT_NUM, QUESTIONS_ID, COMMENT_ID, COMMENT_DATE,COMMENT_BODY)
-			VALUES(#{commentNum}, #{questionsId}, #{commentId}, SYSDATE, #{commentBody})
+			INSERT INTO QUESTIONS_COMMENT (COMMENT_NUM, QUESTIONS_ID, COMMENT_ID, COMMENT_DATE,COMMENT_BODY, DEPTH, ORDER_NO, COMMENT_PARENT,GROUP_ID)
+			VALUES(#{commentNum}, #{questionsId}, #{commentId}, SYSDATE, #{commentBody}, 0, 1, 0,#{commentNum})
 	</insert>
+	
+	<!-- 대댓글 등록 -->
+	<insert id="replyInsert" parameterType="co.community.yedam.questions.service.questionsVO" >
+		<selectKey keyProperty="commentNum" resultType="int" order="BEFORE">
+			SELECT CASE WHEN MAX(COMMENT_NUM) IS NULL THEN 1
+			ELSE
+			MAX(COMMENT_NUM) + 1 END AS comment_num
+			FROM QUESTIONS_COMMENT
+		</selectKey>
+	INSERT INTO QUESTIONS_COMMENT(COMMENT_NUM, QUESTIONS_ID, COMMENT_ID, COMMENT_DATE,COMMENT_BODY, DEPTH, ORDER_NO, COMMENT_PARENT,GROUP_ID)
+	VALUES(#{commentNum}, #{questionsId}, #{commentId}, SYSDATE, #{commentBody}, #{depth}, #{orderNo}, #{commentParent}, #{groupId} )
+	
+	</insert>
+	
+	<!-- 부모 id의 depth 구하기 -->
+	<select id="selectParentDepth" resultType="int">
+		SELECT DEPTH FROM QUESTIONS_COMMENT
+		WHERE COMMENT_NUM = #{commentNum}
+	</select>
+	
+	<!-- 부모 id의 groupId 구하기 -->
+	<select id="selectParentGroupid" resultType="int">
+		SELECT GROUP_ID FROM QUESTIONS_COMMENT
+		WHERE COMMENT_NUM = #{commentNum}
+	</select>
+	
+	<!-- groupId 몇개있는지 카운트 (order_no 정하기 위해서) -->
+	<select id="countGroupId" resultType="int">
+		SELECT COUNT(GROUP_ID) as CNT FROM QUESTIONS_COMMENT
+		WHERE GROUP_ID = #{groupId}
+	</select>
 	
 	<!-- 댓글 삭제 -->
 	<delete id="delComment" parameterType="co.community.yedam.questions.service.questionsVO">

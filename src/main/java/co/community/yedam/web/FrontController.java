@@ -86,6 +86,7 @@ import co.community.yedam.questions.command.QuestionsSearchForm;
 import co.community.yedam.questions.command.QuestionsSelect;
 import co.community.yedam.questions.command.QuestionsSelectList;
 import co.community.yedam.questions.command.QuestionsWriteForm;
+import co.community.yedam.questions.command.ReplyInsert;
 import co.community.yedam.questions.command.UpdComment;
 
 @WebServlet("*.do")
@@ -134,6 +135,8 @@ public class FrontController extends HttpServlet {
 		map.put("/likeUpdate.do", new LikeUpdate());
 		map.put("/getLikeCount.do", new GetLikeCount());
 		map.put("/chat.do",new Chat());
+		map.put("/replyInsert.do", new ReplyInsert());
+		
 		
 		// NoticeBoard
 		map.put("/noticeBoard.do", new NoticeBoard());
