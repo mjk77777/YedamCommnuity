@@ -12,9 +12,9 @@ public class questionsServiceImpl implements questionsService {
 	private questionsMapper map = sqlSession.getMapper(questionsMapper.class);
 
 	@Override
-	public List<questionsVO> questionsSelectList() {
+	public List<questionsVO> questionsSelectList(int str) {
 		//
-		return map.questionsSelectList();
+		return map.questionsSelectList(str);
 	}
 
 	@Override
@@ -133,6 +133,12 @@ public class questionsServiceImpl implements questionsService {
 	public int countGroupId(int groupId) {
 		// TODO Auto-generated method stub
 		return map.countGroupId(groupId);
+	}
+
+	@Override
+	public int countQuestions() {
+		// TODO Auto-generated method stub
+		return map.countQuestions();
 	}
 	 
 

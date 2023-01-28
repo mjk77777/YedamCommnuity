@@ -5,9 +5,30 @@
 
 
 	<select id="questionsSelectList"
-		resultType="co.community.yedam.questions.service.questionsVO">
-		SELECT * FROM QUESTIONS ORDER BY QUESTIONS_ID DESC
-			</select>
+		resultType="co.community.yedam.questions.service.questionsVO" parameterType = "int">
+		<![CDATA[
+		  SELECT *
+		    FROM(
+		        SELECT *
+		        FROM (
+		             SELECT ROWNUM AS SEQ, QUESTIONS_ID,QUESTIONS_TITLE,QUESTIONS_CONTENT, QUESTIONS_DATE, MEMBER_ID, HIT
+		             FROM (
+		                    SELECT * FROM QUESTIONS
+		                    ORDER BY QUESTIONS_ID DESC
+		                    )
+		                )
+		        WHERE SEQ >= #{str} 
+		        )
+		     WHERE ROWNUM <=3 
+		]]>
+	</select>
+	
+	<!-- 총 게시물 개수 구하기 -->
+	<select id="countQuestions" resultType="int">
+		SELECT COUNT(*) AS CNT
+		FROM QUESTIONS
+	
+	</select>
 			
 
 	<select id="questionsSelect"
@@ -53,7 +74,6 @@
 	
 	<!-- 마이페이지 좋아요한 목록 가져오기 -->
 	<select id="likeList" resultType="co.community.yedam.questions.service.questionsVO">
-		SELECT questions_title,
 	</select>
 	
 	<!-- 좋아요 수 추가/업데이트 -->

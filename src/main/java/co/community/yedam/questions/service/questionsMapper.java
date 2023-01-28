@@ -7,11 +7,13 @@ import org.apache.ibatis.annotations.Param;
 public interface questionsMapper {
 	// service랑 같게 하되 넘기는 값에 따라 달라짐
 	
-	List<questionsVO> questionsSelectList();
+	List<questionsVO> questionsSelectList(int str);
 	questionsVO questionsSelect(questionsVO vo);
 	int questionsInsert(questionsVO vo);
 	int questionsUpdate(questionsVO vo);
 	int questionsDelete(questionsVO vo);
+	int countQuestions(); // 게시물 총 개수 구하기
+	
 	int updateHit(questionsVO vo); // 조회수 증가
 	List<questionsVO> likeList();
 	int likeUpdate(questionsVO vo); // 좋아요수 업데이트(추가)

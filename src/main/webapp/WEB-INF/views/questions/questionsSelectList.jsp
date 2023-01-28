@@ -277,6 +277,7 @@ section.heading-page {
 	color:#fff;
 	border:1px solid #42454c;
 }
+
 </style>
 </head>
 <body>
@@ -355,31 +356,52 @@ section.heading-page {
 			</div>
 		</div>
 
-
-	<!-- <div align="center"><h1>Q&A</h1></div> -->
-
-
 	<br>
 	<div align="center">
-
-
-
 		<br>
 		<c:if test="${not empty memberId }">
 			<!-- 접근제어 -->
 			<button type="button" onclick="location.href='questionsWriteForm.do'" class="btn btn-outline-dark">글쓰기</button>
 		</c:if>
 	</div><br>
+	
+	<!-- 페이징처리 -->
 	<div class="page_wrap">
 		<div class="page_nation">
-			<a class="arrow pprev" href="#"></a> <a class="arrow prev" href="#"></a>
-			<a href="#" class="active">1</a> <a href="#">2</a> <a href="#">3</a>
-			<a href="#">4</a> <a href="#">5</a> <a href="#">6</a> <a href="#">7</a>
-			<a href="#">8</a> <a href="#">9</a> <a href="#">10</a> <a
-				class="arrow next" href="#"></a> <a class="arrow nnext" href="#"></a>
+	
+		
+		<c:if test="${strPage eq 1 }">
+			<a class="arrow pprev disabled" ></a> <!-- disabled : href 속성 자체를 제거 -->
+			<a class="arrow prev disabled"></a>
+		</c:if>
+		<c:if test="${strPage ne 1 }">
+			<a class="arrow pprev" href="questionsSelectList.do?page=1" ></a> 
+			<a class="arrow prev" href="questionsSelectList.do?page=${strPage-1 }>"></a>
+		</c:if>
+			
+			<c:forEach var="i" begin="${strPage }" end="${endPage }">
+				<a href="questionsSelectList.do?page=${i }" id="select${i }">${i }</a>
+				<c:if test="${i eq cPage }">
+					<script>
+						$('#select'+${i}).addClass('active');
+					</script>
+				</c:if>
+			</c:forEach>
+			
+				
+			
+			<c:if test="${endPage eq totalPages }">
+				<a class="arrow next disabled" ></a> 
+				<a class="arrow nnext disabled"></a>
+			</c:if>
+			<c:if test="${endPage ne  totalPages }">
+				<a class="arrow next" href="questionsSelectList.do?page=${endPage + 1 }"" ></a> 
+				<a class="arrow nnext" href="questionsSelectList.do?page=${totalPages}"></a>
+			</c:if>
 		</div>
 	</div>
 	
+	<!-- 채팅 -->
 		<button type="button" onclick="location.href='chat.do'"><img alt="채팅이미지" src="images/채팅.png" id="chatImg"></button>
 
 	<form id="fbf" name="fbf" method="post">
