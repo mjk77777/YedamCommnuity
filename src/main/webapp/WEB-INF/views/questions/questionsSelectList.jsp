@@ -12,10 +12,7 @@
 <!-- w3schools -->
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <!-- font awesome -->
-<link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
-  />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
 <title>문의게시판 목록</title>
 <style>
 table {
@@ -33,7 +30,7 @@ section.notice {
     bottom: 50px;
     width: 97px;
     height: 100px;
-    color : blue;
+    color : CORAL;
     cursor : pointer;
 }
 
@@ -278,6 +275,7 @@ section.heading-page {
 	border:1px solid #42454c;
 }
 
+
 </style>
 </head>
 <body>
@@ -402,7 +400,7 @@ section.heading-page {
 	</div>
 	
 	<!-- 채팅 -->
-		<button type="button" onclick="location.href='chat.do'"><img alt="채팅이미지" src="images/채팅.png" id="chatImg"></button>
+		<button type="button" onclick="location.href='chat.do'" ><i class="fas fa-headset fa-4x" id="chatImg" ></i></button>
 
 	<form id="fbf" name="fbf" method="post">
 		<input type="hidden" id="questionsId" name="questionsId" style="color:blue" onclick="location.href='chat.jsp'">
