@@ -831,11 +831,7 @@
 					</div>
 				</div>
 				<div class="col-lg-6">
-					<div class="cs-map">
-						<iframe
-							src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3233.1808595875964!2d128.58873723158544!3d35.86908446377675!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3565e3c264a0f67b%3A0x6f6af951f8677f92!2z7JiI64u07KeB7JeF7KCE66y47ZWZ6rWQ!5e0!3m2!1sko!2skr!4v1664354791415!5m2!1sko!2skr"
-							height="400" style="border: 0;" allowfullscreen=""></iframe>
-					</div>
+					
 				</div>
 			</div>
 		</div>

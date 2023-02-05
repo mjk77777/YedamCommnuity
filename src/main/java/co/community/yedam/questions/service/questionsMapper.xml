@@ -23,6 +23,11 @@
 		]]>
 	</select>
 	
+	<!-- 관리자 - 문의 게시글 모두 보기 -->
+	<select id="questionsSelectListAdmin" resultType="co.community.yedam.questions.service.questionsVO">
+		SELECT * FROM QUESTIONS ORDER BY QUESTIONS_ID DESC
+	</select>
+	
 	<!-- 총 게시물 개수 구하기 -->
 	<select id="countQuestions" resultType="int">
 		SELECT COUNT(*) AS CNT

@@ -18,10 +18,11 @@ public class KakaoLogin implements Command {
 		MemberService dao = new MemberServiceImpl();
 		MemberVO vo = new MemberVO();
 		
-		session.setAttribute("memberId", request.getParameter("memberId"));
+		session.setAttribute("memberId", request.getParameter("kakaoname"));
+		session.setAttribute("memberAuthor", "USER");
 		
 		
-		return "main.do";
+		return "main/main/main";
 	}
 
 }

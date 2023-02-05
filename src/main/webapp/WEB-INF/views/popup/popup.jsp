@@ -89,15 +89,13 @@ margin-bottom : 20px;}
 				<img src="images/warning.png" width="200px" height="200px" usemap="#popup" alt="event page">
             </p>
             <div align="center">
-            	<h5>          ---서버 점검시간---      </h5>
+            	<h5>          ---서버 점검시간 공지---      </h5>
             	<div align="center" id="content">
             		<p style="color:red"><strong>2023년 x월 xx일(월)</strong></p>
             		<p>오후 9시 ~ 11시까지 <br>
             		(약 2시간 소요)<br>
             		많은 양해 부탁드립니다.</p>
-            		
             	</div> 
-            	
             </div>
         </div>
           <form name="pop_form">

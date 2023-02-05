@@ -18,7 +18,7 @@ public class MemberNotifications implements Command {
 		questionsService dao = new questionsServiceImpl();
 		List<questionsVO> list = new ArrayList<questionsVO>();
 		
-		list = dao.questionsSelectList();
+		list = dao.questionsSelectListAdmin();
 		request.setAttribute("list", list);
 		
 		return "noTiles:member/memberNotifications";

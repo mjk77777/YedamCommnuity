@@ -140,6 +140,12 @@ public class questionsServiceImpl implements questionsService {
 		// TODO Auto-generated method stub
 		return map.countQuestions();
 	}
+
+	@Override
+	public List<questionsVO> questionsSelectListAdmin() {
+		// TODO Auto-generated method stub
+		return map.questionsSelectListAdmin();
+	}
 	 
 
 }

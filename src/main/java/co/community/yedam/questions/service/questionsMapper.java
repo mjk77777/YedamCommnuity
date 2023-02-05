@@ -7,7 +7,8 @@ import org.apache.ibatis.annotations.Param;
 public interface questionsMapper {
 	// service랑 같게 하되 넘기는 값에 따라 달라짐
 	
-	List<questionsVO> questionsSelectList(int str);
+	List<questionsVO> questionsSelectList(int str); // 페이지 별로(게시글 수 제한)
+	List<questionsVO> questionsSelectListAdmin(); // 관리자 입장에서 모든 문의 게시물 조회
 	questionsVO questionsSelect(questionsVO vo);
 	int questionsInsert(questionsVO vo);
 	int questionsUpdate(questionsVO vo);

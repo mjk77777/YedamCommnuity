@@ -75,73 +75,58 @@
 }
 </style>
 
-</head>
-<body>
-<form id="lgm" action="memberLogin.do" method="post">
-<div class="page" style="padding-left: 100px">
-  <div class="container">
-    <div class="left" style="padding-top: 60px">
-      <div class="login">Login</div>
-      <div class="eula" style="color: black; font-size: 30px">Yedam Community</div>
-    </div>
-    <div class="right" style="padding-top: 60px">
-     
-      
-      <div class="form">
-        <label for="id" style= "font-size:20px; color: white">ID</label>
-        <input type="text" id="memberId" name="memberId">
-        <label for="password" style= "font-size:20px; color: white">Password</label>
-        <input type="password" id="memberPw" name="memberPw">
-        <br> <br> <br>
-        
-         <button  type="submit" class="custom-btn btn-16" style="color: white" value="Submit" onclick="loginAlter()">로그인</button>
-         <button type="button" class="custom-btn btn-16" style="color: white; margin: 30px" onclick="location.href='memberJoinForm.do'">회원가입</button>
-         <button type="button" class="custom-btn btn-16" style="color: white" onclick="location.href='main.do'">홈</button>
-         
-         <br><br>
-         
-         <div align="center">
-         	<a href="javascript:kakaoLogin()"><img src="images/카카오로그인.png" alt="카카오로그인 이미지"></a>
-         	<a href="javascript:kakaoLogout()">카카오 로그아웃</a>
-         </div>
-       
-      
-       
-      </div>
-    </div>
-  </div>
-</div>
-</form>
-<!-- <!-- 카카오 로그인 api -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script type="text/javascript">
-/*    
+
+<!-- 로그인 유효성 검사 -->
+	function frmSubmit(){
+			if($('#memberId').val() == ''){
+				alert('아이디를 입력해주세요!');
+				return false;
+			}
+			if($('#memberPw').val() == ''){
+				alert('비밀번호를 입력해주세요!');
+				return false;
+			}
+			return true;
+		} 
+	
+<!-- <!-- 카카오 로그인 api -->
+
 Kakao.init('effc9084dea41c3c16edf6c22f6b5815');
 console.log(Kakao.isInitialized()); // 초기화 판단여부
 
 function kakaoLogin(){
 	Kakao.Auth.login({
 		// 받아올 정보 이름
-		scope : 'profile_nickname,account_email,gender',
+		scope : 'profile_nickname,account_email,birthday',
 		success : function(authObj){
 			console.log(authObj);
 			// 위에까진 로그인이 성공한 상태
 			// 이제 데이터 받아올거야
-			window.Kakao.API.request({
+			Kakao.API.request({
 				//현재 로그인한 user의 데이터 가지고 있음
 				url : '/v2/user/me',
 				success : res => {
-					const kakao_account = res.kakao_account;
-					console.log(kakao_account);
-					var id = res.profile_nickname;
-					alert("로그인 성공!");
-					location.href="main.do";
+					const name = res.properties.nickname;
+					const email = res.kakao_account.email;
+					const birthday = res.kakao_account.birthday;
 					
+					console.log("name:"+name);
+					console.log(email);
+					console.log(birthday);
+					
+					$('#kakaoemail').val(email);
+					$('#kakaoname').val(name);
+					$('#kakaobirth').val(birthday);
+					
+					console.log("name는:"+name);
+					document.kakaoFrm.submit();
 				}
 			});
 		}
 	});
-}  */
+} 
 
 function kakaoLogout(){
 	if(Kakao.Auth.getAccessToken()){
@@ -158,6 +143,49 @@ function kakaoLogout(){
 	}
 }
 
+</script>
+
+</head>
+
+<body>
+<div class="page" style="padding-left: 100px">
+  <div class="container">
+    <div class="left" style="padding-top: 60px">
+      <div class="login">Login</div>
+      <div class="eula" style="color: black; font-size: 30px">Yedam Community</div>
+    </div>
+    <div class="right" style="padding-top: 60px">
+     
+<form id="lgm" name="lgm" action="memberLogin.do" method="post" onsubmit="return frmSubmit();">
+      
+        <label for="id" style= "font-size:20px; color: white">ID</label>
+        <input type="text" id="memberId" name="memberId">
+        <label for="password" style= "font-size:20px; color: white">Password</label>
+        <input type="password" id="memberPw" name="memberPw">
+        <br> <br> <br>
+        
+         <input  type="submit" class="custom-btn btn-16" style="color: white" value="로그인"  id="log">
+         <button type="button" class="custom-btn btn-16" style="color: white; margin: 30px" onclick="location.href='memberJoinForm.do'">회원가입</button>
+         <button type="button" class="custom-btn btn-16" style="color: white" onclick="location.href='main.do'">홈</button>
+         
+         <br><br>
+     </form>
+        
+        
+     <form action="kakaoLogin.do" name="kakaoFrm" id="kakaoFrm" method="post">   
+         	<input type="hidden" name="kakaoemail" id="kakaoemail">
+         	<input type="hidden" name="kakaoname" id="kakaoname">
+         	<input type="hidden" name="kakaobirth" id="kakaobirth">
+      </form> 
+         <div align="center">
+         	<a href="javascript:kakaoLogin()"><img src="images/카카오로그인.png" alt="카카오로그인 이미지"></a>
+         	<a href="javascript:kakaoLogout()">카카오 로그아웃</a>
+         </div>
+      </div>
+         </div>
+     
+ </div>
+
 
 <%-- <%
 session.setAttribute("memberId", "52");
@@ -166,8 +194,7 @@ response.sendRedirect("memberLogin.do");
  
 
 
-</script>
-   
+  <!-- <script>
    var current = null;
    document.querySelector('#memberId').addEventListener('focus', function(e) {
      if (current) current.pause();
@@ -218,7 +245,7 @@ response.sendRedirect("memberLogin.do");
      });
    });
    
-</script>
+</script> -->
 <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
